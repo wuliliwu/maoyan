@@ -69,7 +69,7 @@
     <div class="buyTitck-item" @click="itemClick(item.id)">
       <div class="left">
         <img
-          :src="item.img.replace(/w.h/,'64.90')"
+          :src="item.img.replace('w.h','64.90')"
           alt=""
         />
       </div>

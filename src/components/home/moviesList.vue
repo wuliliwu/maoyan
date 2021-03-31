@@ -178,7 +178,8 @@ export default {
   data() {
     return {
       movieList: [],
-      moreList: []
+      moreList: [],
+      Index:0
     }
   },
   components: {
@@ -191,20 +192,6 @@ export default {
     this.$refs.cpnlist.addEventListener('scroll', this.handleScroll)
     this.getBuyTickit()
     // // 在这里发送网络请求
-    // axios.get('/ajax/movieOnInfoList?token=&optimus_uuid=3C42BFB091CE11EB92D3ABD2B1EFDF1B2F84484AAAE1493AA3EDF6C511473A2E&optimus_risk_level=71&optimus_code=10').then((res) => {
-    //
-    //   console.log(res);
-    //   this.movieList = res.data.movieList
-    //   // 把后面需要加载的电影的id存起来
-    //   var len = res.data.data.movieIds.length
-    //
-    //   console.log(res.data.movieIds)
-    //   for (let i = 12; i < len; i+=10) {
-    //
-    //     this.moreList.push(res.data.data.movieIds.splice(i, i+10).join(','))
-    //   }
-    //   console.log(this.moreList)
-    // })
 
   },
   methods: {
@@ -218,23 +205,31 @@ export default {
       // console.log(itemHeight,sumHeight)
       // 判断是否滚动到底了
       if (scrollTop + itemHeight >= sumHeight) {
-        console.log('到底了')
         // 在这里发送ajax请求
+        if (this.Index>=this.moreList.length-1){
+          console.log('超了')
+        }else {
+          this.getmoreComing(this.Index)
+          this.Index++
+        }
+
       }
     },
     async getBuyTickit() {
       var res = await axios.get('/ajax/movieOnInfoList?token=&optimus_uuid=3C42BFB091CE11EB92D3ABD2B1EFDF1B2F84484AAAE1493AA3EDF6C511473A2E&optimus_risk_level=71&optimus_code=10')
       this.movieList = res.data.movieList
-
-      console.log(res.data.movieIds)
-      console.log(res.data.movieIds.length)
-      for (var i = 12; i < 17; i += 10) {
-        this.moreList.push(res.data.movieIds.splice(i, i + 10).join(','))
+      for (var i = 12; i < res.data.movieIds.length; i += 10) {
+        this.moreList.push(res.data.movieIds.splice(i, 10).join(','))
       }
-      console.log(this.moreList)
+
+    },
+    async getmoreComing(i) {
+      var morecoming = await axios.get('/ajax/moreComingList?token=&movieIds='+this.moreList[i]+'&optimus_uuid=3C42BFB091CE11EB92D3ABD2B1EFDF1B2F84484AAAE1493AA3EDF6C511473A2E&optimus_risk_level=71&optimus_code=10')
+
+      console.log(morecoming)
+      this.movieList.push(...morecoming.data.coming)
 
     }
-
   }
 };
 </script>
