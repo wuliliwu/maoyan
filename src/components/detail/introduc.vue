@@ -63,10 +63,9 @@ export default {
   position: absolute;
   left:0;
   top:0;
-
   background: inherit;
-  filter: blur(10px);
-  transform: scale(1);
+  filter: blur(5px);
+  transform: scale(1.5);
   z-index: 2;
 }
 .poster {

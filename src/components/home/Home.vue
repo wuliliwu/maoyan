@@ -88,6 +88,7 @@ import openApp from '../common/openApp'
 import tabControl from './tabControl'
 import catagoryTab from '../common/catagoryTab'
 import moviesList from './moviesList'
+import bottom from "../common/bottom";
 
 export default {
    data() {
@@ -100,9 +101,11 @@ export default {
       catagoryTab,
       tabControl,
       moviesList,
+      bottom
     },
    activated() {
      this.$router.push({ path: '/home/reying' })
+
    }
 }
 </script>

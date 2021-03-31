@@ -89,15 +89,19 @@
     </div>
 
   </div>
+  <bottom v-show="bool"></bottom>
 </div>
 
 </template>
 <script>
+import bottom from "../common/bottom";
 export default {
   data() {
-    return {
+    return {};
+  },
 
-    };
+  components:{
+    bottom
   },
   methods:{
     itemClick(id) {
@@ -111,6 +115,10 @@ export default {
         return [];
       },
     },
+    bool:{
+      type:Boolean,
+      default:false
+    }
   },
 };
 </script>

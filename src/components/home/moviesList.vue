@@ -167,7 +167,7 @@ body {
     </div>
 
     <!-- 这里是购买电影的组件 -->
-    <buy-titck :movieList='movieList'></buy-titck>
+    <buy-titck :movieList='movieList' :bool="bool1"></buy-titck>
   </div>
 </template>
 <script>
@@ -179,7 +179,8 @@ export default {
     return {
       movieList: [],
       moreList: [],
-      Index:0
+      Index:0,
+      bool1:false
     }
   },
   components: {
@@ -208,6 +209,8 @@ export default {
         // 在这里发送ajax请求
         if (this.Index>=this.moreList.length-1){
           console.log('超了')
+          this.bool1 = true
+
         }else {
           this.getmoreComing(this.Index)
           this.Index++
@@ -226,7 +229,7 @@ export default {
     async getmoreComing(i) {
       var morecoming = await axios.get('/ajax/moreComingList?token=&movieIds='+this.moreList[i]+'&optimus_uuid=3C42BFB091CE11EB92D3ABD2B1EFDF1B2F84484AAAE1493AA3EDF6C511473A2E&optimus_risk_level=71&optimus_code=10')
 
-      console.log(morecoming)
+      // console.log(morecoming)
       this.movieList.push(...morecoming.data.coming)
 
     }
